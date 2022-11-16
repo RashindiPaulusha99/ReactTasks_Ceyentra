@@ -75,9 +75,9 @@ const BlogList =()=>{
               <Blogs posts={currentPosts} loading={loading}/>
               <section className={classes.pagination}>
               <div>
-                    <button disabled={!showPreviousButton} onClick={handlePreviousButton}>Previous</button>
-                    <button>{currentPage}/{fullPage}</button>
-                    <button disabled={!showNextButton}  onClick={handleNextButton}>Next</button>
+                    <button className={classes.buttonsPreAndNext} disabled={!showPreviousButton} onClick={handlePreviousButton}>Previous</button>
+                    <button className={classes.buttonsNumbers}>{currentPage}/{fullPage}</button>
+                    <button className={classes.buttonsPreAndNext} disabled={!showNextButton}  onClick={handleNextButton}>Next</button>
               </div>  
             </section>
             </Card>

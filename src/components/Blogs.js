@@ -18,10 +18,8 @@ const Blogs=(posts, loading)=>{
     if(loading){
         return(
             <React.Fragment>
-                
-
-                     <Box sx={{ flexGrow: 1 }}>
-                        <Grid container spacing={1} columns={{ xs: 4, sm: 6, md: 12 }} >
+                <Box sx={{ flexGrow: 1 }}>
+                    <Grid container spacing={1} columns={{ xs: 4, sm: 6, md: 12 }} >
                         {posts.posts.map((post) =>(
                             <Grid item xs={4} lg={4} md={4}  key={post.id}>
                                 <Item className={classes.item}><h3 style={{color:'blue'}}>{post.title}</h3>
@@ -36,15 +34,10 @@ const Blogs=(posts, loading)=>{
                                     </div>
                                 </Item>
                             </Grid>
-                        ))}
-                                
-                        </Grid>
-                    </Box>
-
-                    
-                    
-               
-             </React.Fragment>
+                        ))}        
+                    </Grid>
+                </Box>  
+            </React.Fragment>
           
         );
     }
