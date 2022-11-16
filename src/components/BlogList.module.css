@@ -30,6 +30,8 @@
   width: 100%;
   align-items: center;
   margin: 10px;
+  background-color: #fff;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
 .text{
@@ -52,6 +54,7 @@
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     color: cornflowerblue;
     width: 100px;
+    cursor: pointer;
 }
 
 .buttonsNumbers{
