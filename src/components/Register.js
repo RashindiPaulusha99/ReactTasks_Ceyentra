@@ -9,8 +9,15 @@ import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import Stack from '@mui/material/Stack';
 
+import { useDispatch, useSelector } from 'react-redux';
+import { register_Actions } from '../store/register-action';
+
 const Register =(props)=>{
 
+    const dispatch = useDispatch();
+    const { did, ClientName, ClientEmail, ClientPassword } = props;
+
+    const [id, setId] = useState('');
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -19,14 +26,18 @@ const Register =(props)=>{
     const [showAlert, setShowAlert] = useState('');
     const [isPasswordCorrect, setIsPasswordCorrect] = useState(false);
 
+    const userData = useSelector((state) => state.register.user);
+
     useEffect(()=>{
-        
+        setId(1);
         if(name.trim() !== '' && email.trim() !== '' && password.trim() !== '' && confirmPassword .trim() !== ''){
             setIsLoginButtonDisable(true);
         }
     });
+    let ids = id;
 
-    const loginHandler=()=>{
+    const loginHandler=(event)=>{
+        event.preventDefault();
         
         if(name.trim() === '' || email.trim() === '' || password.trim() === '' || confirmPassword.trim() === ''){
             setShowAlert(0);
@@ -35,6 +46,20 @@ const Register =(props)=>{
         }else{
             setShowAlert(1);
         }
+
+        dispatch(
+            register_Actions.register({
+                id,
+                name,
+                email,
+                password
+            })
+        );
+
+        setId(ids++);
+
+        console.log(userData);
+        console.log(id, name, email, password);
     }
 
     return(
@@ -105,7 +130,7 @@ const Register =(props)=>{
                         This is a success alert — <strong>Login Successfully!</strong>
                     </Alert>
                 </Stack>}
-                { isPasswordCorrect  && <Stack sx={{ width: '100%' }} spacing={2}>
+                { isPasswordCorrect && showAlert === 1  && <Stack sx={{ width: '100%' }} spacing={2}>
                     <Alert severity="warning">
                         <AlertTitle>Warning</AlertTitle>
                         This is a warning alert — <strong>Password not match!</strong>
