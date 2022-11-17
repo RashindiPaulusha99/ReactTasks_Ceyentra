@@ -8,15 +8,18 @@ const registerAction = createSlice({
     reducers:{
         register(state, action){
             const newId = action.payload;
-            const existingId = state.user.find((userId) => userId.id === newId.id);
-            if(!existingId){
+            console.log(newId.id);
+            console.log(state.user.length);
+            const existingId = state.user.find((userDetails) => userDetails.id === newId.id);
+            
+            //if(state.user.length !== 0){
                 state.user.push({
                     id: newId.id,
                     name: newId.name,
                     email: newId.email,
                     password: newId.password,
                 });
-            }
+            //}
         },
         
     }

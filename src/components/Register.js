@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Card from './Card/Card';
 import TextField from '@mui/material/TextField';
-import { Form } from "reactstrap";
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import Stack from '@mui/material/Stack';
+import Login from '../components/Login';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { register_Actions } from '../store/register-action';
@@ -17,7 +17,7 @@ const Register =(props)=>{
     const dispatch = useDispatch();
     const { did, ClientName, ClientEmail, ClientPassword } = props;
 
-    const [id, setId] = useState('');
+    const [id, setId] = useState(1);
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -29,23 +29,24 @@ const Register =(props)=>{
     const userData = useSelector((state) => state.register.user);
 
     useEffect(()=>{
-        setId(1);
+       
         if(name.trim() !== '' && email.trim() !== '' && password.trim() !== '' && confirmPassword .trim() !== ''){
             setIsLoginButtonDisable(true);
         }
     });
-    let ids = id;
 
     const loginHandler=(event)=>{
-        event.preventDefault();
+        //event.preventDefault();
+
+        setId(userData.length+1);
         
-        if(name.trim() === '' || email.trim() === '' || password.trim() === '' || confirmPassword.trim() === ''){
+        /*if(name.trim() === '' || email.trim() === '' || password.trim() === '' || confirmPassword.trim() === ''){
             setShowAlert(0);
         }else if(password.trim() !== confirmPassword.trim()){
             setIsPasswordCorrect(true);
         }else{
             setShowAlert(1);
-        }
+        }*/
 
         dispatch(
             register_Actions.register({
@@ -55,18 +56,19 @@ const Register =(props)=>{
                 password
             })
         );
-
-        setId(ids++);
-
+       
+        console.log(userData.length);
         console.log(userData);
         console.log(id, name, email, password);
     }
 
+    const loginPage = <Login/>;
+
     return(
         <Card>
-            <Form style={{display:'flex', justifyContent:'center'}}>
+            <div style={{display:'flex', justifyContent:'center'}}>
                 
-                <Box component="form" sx={{ '& > :not(style)': { m: 1, width: '1inch' },}} autoComplete="off" style={{display:'flex',flexDirection:'column', justifyContent:'center'}}>
+                <Box component="form" sx={{ '& > :not(style)': { m: 1, width: '1inch' },}} style={{display:'flex',flexDirection:'column', justifyContent:'center'}}>
                     <h1 style={{textAlign:'center'}}>SIGN UP</h1>
                     <TextField fullWidth style={{display:'block'}}
                         id="name" 
@@ -114,9 +116,11 @@ const Register =(props)=>{
                         Sign up
                     </Button>
                    
-                    <h3 style={{textAlign:'center', fontSize:'14px'}}>I already have an account. <Link href="#">Sign up</Link></h3>
+                    <h3 style={{textAlign:'center', fontSize:'14px'}}>I already have an account. 
+                        <Link href="#" >Sign up</Link>
+                    </h3>
                 </Box>
-            </Form>
+            </div>
             <div style={{margin:'10%'}}>
                 { showAlert=== 0 && <Stack sx={{ width: '100%' }} spacing={1}>
                     <Alert severity="warning">
