@@ -36,17 +36,20 @@ const Register =(props)=>{
     });
 
     const loginHandler=(event)=>{
-        //event.preventDefault();
+        event.preventDefault();
 
         setId(userData.length+1);
         
-        /*if(name.trim() === '' || email.trim() === '' || password.trim() === '' || confirmPassword.trim() === ''){
+        if(name.trim() === '' || email.trim() === '' || password.trim() === '' || confirmPassword.trim() === ''){
             setShowAlert(0);
-        }else if(password.trim() !== confirmPassword.trim()){
-            setIsPasswordCorrect(true);
         }else{
             setShowAlert(1);
-        }*/
+        }
+
+        if(password.trim() !== confirmPassword.trim()){
+            setIsPasswordCorrect(true);
+            setShowAlert('');
+        }
 
         dispatch(
             register_Actions.register({
@@ -116,8 +119,7 @@ const Register =(props)=>{
                         Sign up
                     </Button>
                    
-                    <h3 style={{textAlign:'center', fontSize:'14px'}}>I already have an account. 
-                        <Link href="#" >Sign up</Link>
+                    <h3 style={{textAlign:'center', fontSize:'14px'}}>I already have an account. <Link href="#" >Sign in</Link>
                     </h3>
                 </Box>
             </div>
@@ -131,10 +133,10 @@ const Register =(props)=>{
                 { showAlert === 1 && isLoginButtonDisable && <Stack sx={{ width: '100%' }} spacing={2}>
                     <Alert severity="success">
                         <AlertTitle>Success</AlertTitle>
-                        This is a success alert — <strong>Login Successfully!</strong>
+                        This is a success alert — <strong>Successfully Registered!</strong>
                     </Alert>
                 </Stack>}
-                { isPasswordCorrect && showAlert === 1  && <Stack sx={{ width: '100%' }} spacing={2}>
+                { isPasswordCorrect && showAlert === ''  && <Stack sx={{ width: '100%' }} spacing={2}>
                     <Alert severity="warning">
                         <AlertTitle>Warning</AlertTitle>
                         This is a warning alert — <strong>Password not match!</strong>

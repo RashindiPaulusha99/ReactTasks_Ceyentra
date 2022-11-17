@@ -13,6 +13,7 @@ function App() {
       <section>
         {/*<BlogList/>*/}
         <Register/>
+        <Login/>
       </section>
     </div>
   );

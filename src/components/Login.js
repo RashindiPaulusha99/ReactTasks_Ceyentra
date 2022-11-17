@@ -9,12 +9,20 @@ import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import Stack from '@mui/material/Stack';
 
+import { useDispatch, useSelector } from 'react-redux';
+import { register_Actions } from '../store/register-action';
+
 const Login =(props)=>{
+
+    const dispatch = useDispatch();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isLoginButtonDisable, setIsLoginButtonDisable] = useState(false);
     const [showAlert, setShowAlert] = useState('');
+    const [checkEmail, setCheckEmail] = useState(false);
+
+    const userData = useSelector((state) => state.register.user);
 
     useEffect(()=>{
         
@@ -23,11 +31,27 @@ const Login =(props)=>{
         }
     });
 
-    const loginHandler=()=>{
+    const loginHandler=(event)=>{
+        event.preventDefault();
+
         if(email.trim() === '' || password.trim() === ''){
-            setShowAlert(0);
-        }else{
-            setShowAlert(1);
+            setShowAlert('');
+            setCheckEmail(0);
+            
+        }
+
+        for(let i=0; i< userData.length; i++){
+            if(email.trim() !== userData[i].email || password.trim() !== userData[i].password){
+                setCheckEmail(1);
+                setShowAlert('');
+            }
+        }
+
+        for(let i=0; i< userData.length; i++){
+            if(email === userData[i].email && password === userData[i].password){
+                setShowAlert(1);
+                setCheckEmail('');
+            }
         }
     }
 
@@ -66,14 +90,20 @@ const Login =(props)=>{
                     <h3 style={{textAlign:'center', fontSize:'14px'}}>I don't have an account. Let's <Link href="#">Sign up</Link></h3>
                 </Box>
             </Form>
-            <div style={{margin:'100px'}}>
-                { showAlert=== 0 && <Stack sx={{ width: '100%' }} spacing={2}>
+            <div style={{margin:'10px'}}>
+                { showAlert === '' && checkEmail === 0  && <Stack sx={{ width: '100%' }} spacing={2}>
                     <Alert severity="warning">
                         <AlertTitle>Warning</AlertTitle>
                         This is a warning alert — <strong>All fields are required !</strong>
                     </Alert>
                 </Stack>}
-                { showAlert === 1 && isLoginButtonDisable && <Stack sx={{ width: '100%' }} spacing={2}>
+                {showAlert === '' && checkEmail === 1 && <Stack sx={{ width: '100%' }} spacing={2}>
+                    <Alert severity="warning">
+                        <AlertTitle>Warning</AlertTitle>
+                        This is a warning alert — <strong>Invalid Email Or Password!</strong>
+                    </Alert>
+                </Stack>}
+                { showAlert === 1 && checkEmail === '' && isLoginButtonDisable && <Stack sx={{ width: '100%' }} spacing={2}>
                     <Alert severity="success">
                         <AlertTitle>Success</AlertTitle>
                         This is a success alert — <strong>Login Successfully!</strong>
