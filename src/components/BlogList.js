@@ -37,21 +37,14 @@ const BlogList =()=>{
       const indexOfFirstPost = indexOfLastPost - postPerPage;
       const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
 
-      let pages = fullPage;
-
-      let prevButton = false;
-      let nextButton = false;
-      
     const handleNextButton = (event, value) => {
       setCurrentPage(currentPage+1);
-      pages-=1;
-      setFullPage(pages);
-      console.log(pages);
-      if(pages!==9){
+
+      if(currentPage === currentPage){
         setShowPreviousButton(true);
       }
 
-      if(pages===1){
+      if(currentPage === fullPage-1){
         setShowNextButton(false);
       }
       
@@ -59,13 +52,12 @@ const BlogList =()=>{
 
     const handlePreviousButton = (event, value) => {
       setCurrentPage(currentPage-1);
-      pages+=1;
-      setFullPage(pages);
-      if(pages===2){
+      
+      if(currentPage === fullPage){
         setShowNextButton(true);
       }
 
-      if(pages===9){
+      if(currentPage === fullPage-7){
         setShowPreviousButton(false);
       }
     };

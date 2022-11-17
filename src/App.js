@@ -1,6 +1,7 @@
 import BlogList from "./components/BlogList";
+import Register from "./components/Register";
 import Header from "./components/Layout/Header";
-
+import Login from "./components/Login";
 
 
 function App() {
@@ -10,7 +11,8 @@ function App() {
       <Header/>
       </section>
       <section>
-        <BlogList/>
+        {/*<BlogList/>*/}
+        <Register/>
       </section>
     </div>
   );

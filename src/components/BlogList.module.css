@@ -53,13 +53,14 @@
     border-radius: 5px;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     color: cornflowerblue;
-    width: 100px;
+    width: 5em;
     cursor: pointer;
 }
 
 .buttonsNumbers{
   color: cornflowerblue;
   background-color: transparent;
+  border-radius: 5px;
 }
 
 
