@@ -15,7 +15,6 @@ import { register_Actions } from '../store/register-action';
 const Register =(props)=>{
 
     const dispatch = useDispatch();
-    const { did, ClientName, ClientEmail, ClientPassword } = props;
 
     const [id, setId] = useState(1);
     const [name, setName] = useState('');
@@ -26,14 +25,15 @@ const Register =(props)=>{
     const [showAlert, setShowAlert] = useState('');
     const [isPasswordCorrect, setIsPasswordCorrect] = useState(false);
 
-    const userData = useSelector((state) => state.register.user);
-
     useEffect(()=>{
        
         if(name.trim() !== '' && email.trim() !== '' && password.trim() !== '' && confirmPassword .trim() !== ''){
             setIsLoginButtonDisable(true);
         }
     });
+
+
+    const userData = useSelector((state) => state.register.user);
 
     const loginHandler=(event)=>{
         event.preventDefault();
@@ -42,30 +42,34 @@ const Register =(props)=>{
         
         if(name.trim() === '' || email.trim() === '' || password.trim() === '' || confirmPassword.trim() === ''){
             setShowAlert(0);
+
+            if(password.trim() !== confirmPassword.trim()){
+                setIsPasswordCorrect(true);
+                setShowAlert('');
+
+                for(let i=0; i< userData.length; i++){
+                    if(userData[i].email === email){
+                        setEmail('');
+                    }else{
+                        setEmail(email);
+                    }
+                }
+            }
         }else{
             setShowAlert(1);
         }
-
-        if(password.trim() !== confirmPassword.trim()){
-            setIsPasswordCorrect(true);
-            setShowAlert('');
+        const existingEmail = userData.find((userDetails) => userDetails.email === email);
+        if(!existingEmail){
+            dispatch(
+                register_Actions.register({
+                    id,
+                    name,
+                    email,
+                    password
+                })
+            );
         }
-
-        dispatch(
-            register_Actions.register({
-                id,
-                name,
-                email,
-                password
-            })
-        );
-       
-        console.log(userData.length);
-        console.log(userData);
-        console.log(id, name, email, password);
     }
-
-    const loginPage = <Login/>;
 
     return(
         <Card>

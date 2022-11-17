@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Card from './Card/Card';
 import TextField from '@mui/material/TextField';
-import { Form } from "reactstrap";
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
@@ -9,18 +8,15 @@ import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import Stack from '@mui/material/Stack';
 
-import { useDispatch, useSelector } from 'react-redux';
-import { register_Actions } from '../store/register-action';
+import { useSelector } from 'react-redux';
 
 const Login =(props)=>{
-
-    const dispatch = useDispatch();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isLoginButtonDisable, setIsLoginButtonDisable] = useState(false);
     const [showAlert, setShowAlert] = useState('');
-    const [checkEmail, setCheckEmail] = useState(false);
+    const [checkEmail, setCheckEmail] = useState('');
 
     const userData = useSelector((state) => state.register.user);
 
@@ -33,12 +29,6 @@ const Login =(props)=>{
 
     const loginHandler=(event)=>{
         event.preventDefault();
-
-        if(email.trim() === '' || password.trim() === ''){
-            setShowAlert('');
-            setCheckEmail(0);
-            
-        }
 
         for(let i=0; i< userData.length; i++){
             if(email.trim() !== userData[i].email || password.trim() !== userData[i].password){
@@ -53,11 +43,16 @@ const Login =(props)=>{
                 setCheckEmail('');
             }
         }
+
+        if(email.trim() === '' || password.trim() === ''){
+            setCheckEmail(0);
+            setShowAlert('');
+        }
     }
 
     return(
         <Card>
-            <Form style={{display:'flex', justifyContent:'center'}}>
+            <div style={{display:'flex', justifyContent:'center'}}>
                 
                 <Box component="form" sx={{ '& > :not(style)': { m: 1, width: '1inch' },}} autoComplete="off" style={{display:'flex',flexDirection:'column', justifyContent:'center'}}>
                     <h1 style={{textAlign:'center'}}>SIGN IN</h1>
@@ -89,8 +84,8 @@ const Login =(props)=>{
                    
                     <h3 style={{textAlign:'center', fontSize:'14px'}}>I don't have an account. Let's <Link href="#">Sign up</Link></h3>
                 </Box>
-            </Form>
-            <div style={{margin:'10px'}}>
+            </div>
+            <div style={{margin:'10%'}}>
                 { showAlert === '' && checkEmail === 0  && <Stack sx={{ width: '100%' }} spacing={2}>
                     <Alert severity="warning">
                         <AlertTitle>Warning</AlertTitle>
