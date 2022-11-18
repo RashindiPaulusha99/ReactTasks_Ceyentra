@@ -63,5 +63,14 @@
   border-radius: 5px;
 }
 
+.invalid_input {
+  border: 1px solid #b40e0e;
+  
+}
+
+.input{
+  display: block;
+}
+
 
 

@@ -9,6 +9,7 @@ import AlertTitle from '@mui/material/AlertTitle';
 import Stack from '@mui/material/Stack';
 import Login from '../components/Login';
 
+
 import { useDispatch, useSelector } from 'react-redux';
 import { register_Actions } from '../store/register-action';
 
@@ -24,14 +25,22 @@ const Register =(props)=>{
     const [isLoginButtonDisable, setIsLoginButtonDisable] = useState(false);
     const [showAlert, setShowAlert] = useState('');
     const [isPasswordCorrect, setIsPasswordCorrect] = useState(false);
+    const [isEmailExists, setIsEmailExists] = useState(false);
+    const [validateEmail, setValidateEmail] = useState(false);
+    const [showEmailError, setShowEmailError] = useState(false);
+    const [showNameError, setShowNameError] = useState(false);
+    const [showPasswordError, setShowPasswordError] = useState(false);
+
+    const regExEmail = /^[0-9A-Z a-z$&#]{3,10}(@gmail.com)|(@yahoo.com)$/i;
+    const regExName = /^[A-Z|a-z\s]{3,20}$/i;
+    const regExPassword = /^[A-Z|a-z|0-9\s]{4,10}$/g;
 
     useEffect(()=>{
        
         if(name.trim() !== '' && email.trim() !== '' && password.trim() !== '' && confirmPassword .trim() !== ''){
             setIsLoginButtonDisable(true);
-        }
+        }  
     });
-
 
     const userData = useSelector((state) => state.register.user);
 
@@ -54,21 +63,31 @@ const Register =(props)=>{
                         setEmail(email);
                     }
                 }
+
             }
         }else{
             setShowAlert(1);
         }
+
         const existingEmail = userData.find((userDetails) => userDetails.email === email);
-        if(!existingEmail){
-            dispatch(
-                register_Actions.register({
-                    id,
-                    name,
-                    email,
-                    password
-                })
-            );
-        }
+                setIsEmailExists(existingEmail);
+                if(!existingEmail){
+                    if(!regExEmail.test(email)){
+                        setValidateEmail(false);
+                        setShowEmailError(true);
+                    }else{
+                        dispatch(
+                            register_Actions.register({
+                                id,
+                                name,
+                                email,
+                                password
+                            })
+                        );
+                    }
+                }
+
+        console.log(userData);
     }
 
     return(
@@ -84,9 +103,16 @@ const Register =(props)=>{
                         variant="outlined" 
                         type='text' 
                         onChange={event=>{
-                            setName(event.target.value)
+                            setName(event.target.value);
+                            if(!regExName.test(event.target.value)){
+                                setShowNameError(true);
+                            }else{
+                                
+                                setShowNameError(false);
+                            }
                         }}
                     />
+                    {showNameError ? <p style={{color:'red'}}>Name Invalid</p> : ''}
                     <TextField fullWidth style={{display:'block'}}
                         id="email" 
                         label="Email" 
@@ -94,9 +120,18 @@ const Register =(props)=>{
                         variant="outlined" 
                         type='text' 
                         onChange={event=>{
-                            setEmail(event.target.value)
+                            setEmail(event.target.value);
+                            if(!regExEmail.test(event.target.value)){
+                                setValidateEmail(false);
+                                setShowEmailError(true);
+                            }else{
+                                setValidateEmail(true);
+                                setShowEmailError(false);
+                            }
                         }}
+                        
                     />
+                    {showEmailError ? <p style={{color:'red'}}>Email Invalid</p> : ''}
                     <TextField fullWidth style={{display:'block'}}
                         id="password" 
                         label="Password" 
@@ -105,8 +140,15 @@ const Register =(props)=>{
                         type="password" 
                         onChange={event=>{
                             setPassword(event.target.value)
+                            if(!regExPassword.test(event.target.value)){
+                                setShowPasswordError(true);
+                            }else{
+                                
+                                setShowPasswordError(false);
+                            }
                         }}
                     />
+                    {showPasswordError ? <p style={{color:'red'}}>Password Invalid</p> : ''}
                     <TextField fullWidth style={{display:'block'}}
                         id="confirmPassword" 
                         label="Re-enter password" 
@@ -128,22 +170,28 @@ const Register =(props)=>{
                 </Box>
             </div>
             <div style={{margin:'10%'}}>
-                { showAlert=== 0 && <Stack sx={{ width: '100%' }} spacing={1}>
+                {!showPasswordError && !showNameError && !showEmailError && showAlert=== 0 && !validateEmail && <Stack sx={{ width: '100%' }} spacing={1}>
                     <Alert severity="warning">
                         <AlertTitle>Warning</AlertTitle>
                         This is a warning alert — <strong>All fields are required !</strong>
                     </Alert>
                 </Stack>}
-                { showAlert === 1 && isLoginButtonDisable && <Stack sx={{ width: '100%' }} spacing={2}>
+                {!showPasswordError && !showNameError && !showEmailError &&  validateEmail && !isEmailExists && showAlert === 1 && isLoginButtonDisable && <Stack sx={{ width: '100%' }} spacing={2}>
                     <Alert severity="success">
                         <AlertTitle>Success</AlertTitle>
                         This is a success alert — <strong>Successfully Registered!</strong>
                     </Alert>
                 </Stack>}
-                { isPasswordCorrect && showAlert === ''  && <Stack sx={{ width: '100%' }} spacing={2}>
+                {!showPasswordError && !showNameError && !showEmailError &&  isPasswordCorrect && showAlert === ''  && <Stack sx={{ width: '100%' }} spacing={2}>
                     <Alert severity="warning">
                         <AlertTitle>Warning</AlertTitle>
                         This is a warning alert — <strong>Password not match!</strong>
+                    </Alert>
+                </Stack>}
+                {!showPasswordError && !showNameError && !showEmailError &&  isEmailExists  && <Stack sx={{ width: '100%' }} spacing={2}>
+                    <Alert severity="warning">
+                        <AlertTitle>Warning</AlertTitle>
+                        This is a warning alert — <strong>Email Already Exists!</strong>
                     </Alert>
                 </Stack>}
             </div>
