@@ -12,6 +12,8 @@ import Login from '../components/Login';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { register_Actions } from '../store/register-action';
+import { login_Actions } from '../store/login-action';
+
 
 const Register =(props)=>{
 
@@ -30,6 +32,7 @@ const Register =(props)=>{
     const [showEmailError, setShowEmailError] = useState(false);
     const [showNameError, setShowNameError] = useState(false);
     const [showPasswordError, setShowPasswordError] = useState(false);
+    const [logged, setLogged] = useState(false);
 
     const regExEmail = /^[0-9A-Z a-z$&#]{3,10}(@gmail.com)|(@yahoo.com)$/i;
     const regExName = /^[A-Z|a-z\s]{3,20}$/i;
@@ -39,9 +42,10 @@ const Register =(props)=>{
        
         if(name.trim() !== '' && email.trim() !== '' && password.trim() !== '' && confirmPassword .trim() !== ''){
             setIsLoginButtonDisable(true);
-        }  
+        } 
+       
     });
-
+    
     const userData = useSelector((state) => state.register.user);
 
     const loginHandler=(event)=>{
@@ -88,10 +92,19 @@ const Register =(props)=>{
                 }
 
         console.log(userData);
+        
+    }
+
+    const login=()=>{
+        setLogged(true);
+        
     }
 
     return(
         <Card>
+           { logged ? <Login/> : 
+            
+            <React.Fragment>
             <div style={{display:'flex', justifyContent:'center'}}>
                 
                 <Box component="form" sx={{ '& > :not(style)': { m: 1, width: '1inch' },}} style={{display:'flex',flexDirection:'column', justifyContent:'center'}}>
@@ -159,13 +172,13 @@ const Register =(props)=>{
                             setConfirmPassword(event.target.value)
                         }}
                     />
-                    <Button variant="contained" disabled={!isLoginButtonDisable} style={{display:'block'}}
+                    <Button variant="contained" disabled={!isLoginButtonDisable} style={{display:'block'}} fullWidth
                         onClick={loginHandler}
                     >
                         Sign up
                     </Button>
-                   
-                    <h3 style={{textAlign:'center', fontSize:'14px'}}>I already have an account. <Link href="#" >Sign in</Link>
+                
+                    <h3 style={{textAlign:'center', fontSize:'14px'}}>I already have an account. <Link href="#" onClick={login}>Sign in</Link>
                     </h3>
                 </Box>
             </div>
@@ -195,6 +208,10 @@ const Register =(props)=>{
                     </Alert>
                 </Stack>}
             </div>
+        </React.Fragment>
+            
+          }  
+            
         </Card>
     );
 }
