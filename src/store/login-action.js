@@ -3,11 +3,18 @@ import {createSlice} from '@reduxjs/toolkit';
 const loginAction = createSlice({
     name: 'login',
     initialState: {
-        log: false,
+        isLogged: null,
     },
     reducers:{
         login(state, action){
-            
+            const newId = action.payload;
+
+            state.isLogged={
+                id: newId.id,
+                name: newId.name,
+                email: newId.email,
+                password: newId.password,
+            };
         },
         
     }

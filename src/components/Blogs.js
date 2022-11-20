@@ -4,8 +4,11 @@ import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
+import { useHistory } from "react-router-dom";
+
 
 const Blogs=(posts, loading)=>{
+    const history = useHistory();
 
     const Item = styled(Paper)(({ theme }) => ({
         backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -15,6 +18,10 @@ const Blogs=(posts, loading)=>{
         color: theme.palette.text.secondary,
       }));
 
+      const clickPostHandler=(event)=>{
+           history.push('/post',{ state: { id: event.id, title: event.title, body: event.body } });
+      }
+
     if(loading){
         return(
             <React.Fragment>
@@ -22,7 +29,7 @@ const Blogs=(posts, loading)=>{
                     <Grid container spacing={1} columns={{ xs: 4, sm: 6, md: 12 }} >
                         {posts.posts.map((post) =>(
                             <Grid item xs={4} lg={4} md={4}  key={post.id} >
-                                <Item className={classes.item}>
+                                <Item className={classes.item} onClick={()=>clickPostHandler(post)}>
                                     <h3 style={{color:'#0984e3'}} >{post.title}</h3>
                                     <p>{post.body}</p>
                                     <div style={{ display:'flex', flexDirection:'row',justifyContent: 'space-evenly', backgroundColor: '#00cec9'}}>

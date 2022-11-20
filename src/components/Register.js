@@ -3,17 +3,16 @@ import Card from './Card/Card';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Link from '@mui/material/Link';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import Stack from '@mui/material/Stack';
 import Login from '../components/Login';
+import {Link} from "react-router-dom";
 
 
 import { useDispatch, useSelector } from 'react-redux';
 import { register_Actions } from '../store/register-action';
 import { login_Actions } from '../store/login-action';
-
 
 const Register =(props)=>{
 
@@ -39,16 +38,14 @@ const Register =(props)=>{
     const regExPassword = /^[A-Z|a-z|0-9\s]{4,10}$/g;
 
     useEffect(()=>{
-       
         if(name.trim() !== '' && email.trim() !== '' && password.trim() !== '' && confirmPassword .trim() !== ''){
             setIsLoginButtonDisable(true);
-        } 
-       
+        }
     });
     
     const userData = useSelector((state) => state.register.user);
 
-    const loginHandler=(event)=>{
+    const registerHandler=(event)=>{
         event.preventDefault();
 
         setId(userData.length+1);
@@ -74,39 +71,32 @@ const Register =(props)=>{
         }
 
         const existingEmail = userData.find((userDetails) => userDetails.email === email);
-                setIsEmailExists(existingEmail);
-                if(!existingEmail){
-                    if(!regExEmail.test(email)){
-                        setValidateEmail(false);
-                        setShowEmailError(true);
-                    }else{
-                        dispatch(
-                            register_Actions.register({
-                                id,
-                                name,
-                                email,
-                                password
-                            })
-                        );
-                    }
+            setIsEmailExists(existingEmail);
+            if(!existingEmail){
+                if(!regExEmail.test(email)){
+                    setValidateEmail(false);
+                    setShowEmailError(true);
+                }else{
+                    dispatch(
+                        register_Actions.register({
+                            id,
+                            name,
+                            email,
+                            password
+                        })
+                    );
                 }
-
-        console.log(userData);
-        
-    }
+            }
+        }
 
     const login=()=>{
-        setLogged(true);
-        
+        setLogged(true); 
     }
 
     return(
         <Card>
-           { logged ? <Login/> : 
-            
             <React.Fragment>
             <div style={{display:'flex', justifyContent:'center'}}>
-                
                 <Box component="form" sx={{ '& > :not(style)': { m: 1, width: '1inch' },}} style={{display:'flex',flexDirection:'column', justifyContent:'center'}}>
                     <h1 style={{textAlign:'center'}}>SIGN UP</h1>
                     <TextField fullWidth style={{display:'block'}}
@@ -120,7 +110,6 @@ const Register =(props)=>{
                             if(!regExName.test(event.target.value)){
                                 setShowNameError(true);
                             }else{
-                                
                                 setShowNameError(false);
                             }
                         }}
@@ -173,45 +162,43 @@ const Register =(props)=>{
                         }}
                     />
                     <Button variant="contained" disabled={!isLoginButtonDisable} style={{display:'block'}} fullWidth
-                        onClick={loginHandler}
+                        onClick={registerHandler}
                     >
                         Sign up
                     </Button>
                 
-                    <h3 style={{textAlign:'center', fontSize:'14px'}}>I already have an account. <Link href="#" onClick={login}>Sign in</Link>
+                    <h3 style={{textAlign:'center', fontSize:'14px'}}>I already have an account. <Link to="/login" onClick={login}>Sign in</Link>
                     </h3>
                 </Box>
             </div>
             <div style={{margin:'10%'}}>
                 {!showPasswordError && !showNameError && !showEmailError && showAlert=== 0 && !validateEmail && <Stack sx={{ width: '100%' }} spacing={1}>
-                    <Alert severity="warning">
+                    <Alert severity="error">
                         <AlertTitle>Warning</AlertTitle>
                         This is a warning alert — <strong>All fields are required !</strong>
                     </Alert>
                 </Stack>}
-                {!showPasswordError && !showNameError && !showEmailError &&  validateEmail && !isEmailExists && showAlert === 1 && isLoginButtonDisable && <Stack sx={{ width: '100%' }} spacing={2}>
+                {!showPasswordError && !showNameError && !showEmailError &&  validateEmail && !isEmailExists && showAlert === 1 && isLoginButtonDisable && userData.length !== 0 &&
+                <Stack sx={{ width: '100%' }} spacing={2}>
                     <Alert severity="success">
                         <AlertTitle>Success</AlertTitle>
                         This is a success alert — <strong>Successfully Registered!</strong>
                     </Alert>
                 </Stack>}
                 {!showPasswordError && !showNameError && !showEmailError &&  isPasswordCorrect && showAlert === ''  && <Stack sx={{ width: '100%' }} spacing={2}>
-                    <Alert severity="warning">
+                    <Alert severity="error">
                         <AlertTitle>Warning</AlertTitle>
                         This is a warning alert — <strong>Password not match!</strong>
                     </Alert>
                 </Stack>}
                 {!showPasswordError && !showNameError && !showEmailError &&  isEmailExists  && <Stack sx={{ width: '100%' }} spacing={2}>
-                    <Alert severity="warning">
+                    <Alert severity="error">
                         <AlertTitle>Warning</AlertTitle>
                         This is a warning alert — <strong>Email Already Exists!</strong>
                     </Alert>
                 </Stack>}
             </div>
-        </React.Fragment>
-            
-          }  
-            
+            </React.Fragment>
         </Card>
     );
 }

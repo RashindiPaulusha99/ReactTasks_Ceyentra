@@ -19,4 +19,24 @@
     font-weight: normal;
     font-size: 50;
   }
+
+  .logout{
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .button{
+    position: relative;
+    top: 25px;
+    left: 10px;
+    height: 2rem;
+    color: white;
+  }
+
+  .username{
+    position: relative;
+    top: 4px;
+    right: 10px;
+    height: 2rem;
+  }
   

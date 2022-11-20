@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+import Header from '../Layout/Header';
 import classes from './Card.module.css';
 
 const Card = (props)=>{
     return(
-        <div className={classes.card}>{props.children}</div>
+        <Fragment>
+            <Header/>
+            <main className={classes.card}>{props.children}</main>
+        </Fragment>
     );
 }
 
