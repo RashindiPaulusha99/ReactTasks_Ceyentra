@@ -6,13 +6,10 @@ import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import Stack from '@mui/material/Stack';
-import Login from '../components/Login';
 import {Link} from "react-router-dom";
-
 
 import { useDispatch, useSelector } from 'react-redux';
 import { register_Actions } from '../store/register-action';
-import { login_Actions } from '../store/login-action';
 
 const Register =(props)=>{
 
@@ -31,7 +28,6 @@ const Register =(props)=>{
     const [showEmailError, setShowEmailError] = useState(false);
     const [showNameError, setShowNameError] = useState(false);
     const [showPasswordError, setShowPasswordError] = useState(false);
-    const [logged, setLogged] = useState(false);
 
     const regExEmail = /^[0-9A-Z a-z$&#]{3,10}(@gmail.com)|(@yahoo.com)$/i;
     const regExName = /^[A-Z|a-z\s]{3,20}$/i;
@@ -89,14 +85,10 @@ const Register =(props)=>{
             }
         }
 
-    const login=()=>{
-        setLogged(true); 
-    }
-
     return(
         <Card>
             <React.Fragment>
-            <div style={{display:'flex', justifyContent:'center'}}>
+            <div style={{display:'flex', justifyContent:'center', backgroundColor: '#00cec9', height: '70vh', width: '50vw',position: "absolute", top: '300px', bottom:'0', left:'0', right: '0', margin: 'auto',boxShadow: 'rgba(44, 153, 149, 0.4) 5px 5px, rgba(44, 153, 149, 0.3) 10px 10px, rgba(44, 153, 149, 0.2) 15px 15px, rgba(44, 153, 149, 0.1) 20px 20px, rgba(44, 153, 149, 0.05) 25px 25px' }}>
                 <Box component="form" sx={{ '& > :not(style)': { m: 1, width: '1inch' },}} style={{display:'flex',flexDirection:'column', justifyContent:'center'}}>
                     <h1 style={{textAlign:'center'}}>SIGN UP</h1>
                     <TextField fullWidth style={{display:'block'}}
@@ -161,21 +153,21 @@ const Register =(props)=>{
                             setConfirmPassword(event.target.value)
                         }}
                     />
-                    <Button variant="contained" disabled={!isLoginButtonDisable} style={{display:'block'}} fullWidth
+                    <Button variant="contained" disabled={!isLoginButtonDisable} style={{display:'block', backgroundColor: '#00b894'}} fullWidth
                         onClick={registerHandler}
                     >
                         Sign up
                     </Button>
                 
-                    <h3 style={{textAlign:'center', fontSize:'14px'}}>I already have an account. <Link to="/login" onClick={login}>Sign in</Link>
+                    <h3 style={{textAlign:'center', fontSize:'14px'}}>I already have an account. <Link to="/login">Sign in</Link>
                     </h3>
                 </Box>
             </div>
-            <div style={{margin:'10%'}}>
+            <div style={{margin:'10%', position: 'absolute', top: '400px',left:'200px',right: '0', width: '50%'}}>
                 {!showPasswordError && !showNameError && !showEmailError && showAlert=== 0 && !validateEmail && <Stack sx={{ width: '100%' }} spacing={1}>
                     <Alert severity="error">
-                        <AlertTitle>Warning</AlertTitle>
-                        This is a warning alert — <strong>All fields are required !</strong>
+                        <AlertTitle>Error</AlertTitle>
+                        This is a error alert — <strong>All fields are required !</strong>
                     </Alert>
                 </Stack>}
                 {!showPasswordError && !showNameError && !showEmailError &&  validateEmail && !isEmailExists && showAlert === 1 && isLoginButtonDisable && userData.length !== 0 &&
@@ -187,14 +179,14 @@ const Register =(props)=>{
                 </Stack>}
                 {!showPasswordError && !showNameError && !showEmailError &&  isPasswordCorrect && showAlert === ''  && <Stack sx={{ width: '100%' }} spacing={2}>
                     <Alert severity="error">
-                        <AlertTitle>Warning</AlertTitle>
-                        This is a warning alert — <strong>Password not match!</strong>
+                        <AlertTitle>Error</AlertTitle>
+                        This is a error alert — <strong>Password not match!</strong>
                     </Alert>
                 </Stack>}
                 {!showPasswordError && !showNameError && !showEmailError &&  isEmailExists  && <Stack sx={{ width: '100%' }} spacing={2}>
                     <Alert severity="error">
-                        <AlertTitle>Warning</AlertTitle>
-                        This is a warning alert — <strong>Email Already Exists!</strong>
+                        <AlertTitle>Error</AlertTitle>
+                        This is a error alert — <strong>Email Already Exists!</strong>
                     </Alert>
                 </Stack>}
             </div>

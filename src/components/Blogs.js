@@ -1,14 +1,21 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import classes from './BlogList.module.css';
 import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import { useHistory } from "react-router-dom";
-
+import { useSelector } from 'react-redux';
 
 const Blogs=(posts, loading)=>{
     const history = useHistory();
+    const userData = useSelector((state) => state.login.isLogged);
+
+    useEffect(()=>{
+        if(userData === null){
+            history.push('login');
+        }
+    });
 
     const Item = styled(Paper)(({ theme }) => ({
         backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -47,12 +54,9 @@ const Blogs=(posts, loading)=>{
                 </Box>  
             </React.Fragment> 
         );
-    }
-
-   
-    
-
-   
+    } else{
+        <p>Loading....</p>
+    } 
 }
 
 export default Blogs;

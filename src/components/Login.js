@@ -33,7 +33,7 @@ const Login =()=>{
     const regExPassword = /^[A-Z|a-z|0-9\s]{4,10}$/g;
 
     const userData = useSelector((state) => state.register.user);
-    const userDatas = useSelector((state) => state.login.isLogged);
+    const userDatas = useSelector((state) => state.register.isLogged);
 
     useEffect(()=>{
         if(email.trim() !== '' && password.trim() !== ''){
@@ -43,6 +43,7 @@ const Login =()=>{
 
     const loginHandler=(event)=>{
         event.preventDefault();
+        console.log(userData);
 
         for(let i=0; i< userData.length; i++){
             if(email.trim() !== userData[i].email || password.trim() !== userData[i].password){
@@ -51,11 +52,14 @@ const Login =()=>{
             }
         }
 
+        if(userData.length === 0){
+            setCheckEmail(1);
+        }
+
         for(let i=0; i< userData.length; i++){
             if(email === userData[i].email && password === userData[i].password){
                 setShowAlert(1);
                 setCheckEmail('');
-
                 setId(userData[i].id);
                 setName(userData[i].name);
 
@@ -67,8 +71,6 @@ const Login =()=>{
                         password
                     })
                 );
-
-                console.log(userDatas);
 
                 if(id !== ''){
                     history.push('/blog');
@@ -85,10 +87,10 @@ const Login =()=>{
     return(
         <Card>
             <React.Fragment>
-                <div style={{display:'flex', justifyContent:'center'}}>
+                <div style={{display:'flex', justifyContent:'center', backgroundColor: '#00cec9', height: '70vh', width: '50vw',position: "absolute", top: '300px', bottom:'0', left:'0', right: '0', margin: 'auto',boxShadow: 'rgba(44, 153, 149, 0.4) 5px 5px, rgba(44, 153, 149, 0.3) 10px 10px, rgba(44, 153, 149, 0.2) 15px 15px, rgba(44, 153, 149, 0.1) 20px 20px, rgba(44, 153, 149, 0.05) 25px 25px' }}>
                     <Box component="form" sx={{ '& > :not(style)': { m: 1, width: '1inch' },}}  style={{display:'flex',flexDirection:'column', justifyContent:'center'}}>
                         <h1 style={{textAlign:'center'}}>SIGN IN</h1>
-                        <TextField fullWidth style={{display:'block'}}
+                        <TextField fullWidth style={{display:'block', marginRight: '2px'}}
                             id="email" 
                             label="Email" 
                             value={email} 
@@ -122,7 +124,7 @@ const Login =()=>{
                             }}
                         />
                         {showPasswordError ? <p style={{color:'red'}}>Password Invalid</p> : ''}
-                        <Button variant="contained" disabled={!isLoginButtonDisable} style={{display:'block'}} fullWidth
+                        <Button variant="contained" disabled={!isLoginButtonDisable} style={{display:'block', backgroundColor: '#00b894'}} fullWidth
                                 onClick={loginHandler}
                             >
                                 Sign in
@@ -131,17 +133,17 @@ const Login =()=>{
                         <h3 style={{textAlign:'center', fontSize:'14px'}}>I don't have an account. Let's <Link to='/register'>Sign up</Link></h3>
                     </Box>
                 </div>
-                <div style={{margin:'10%'}}>
+                <div style={{margin:'10%', position: 'absolute', top: '350px',left:'200px',right: '0', width: '50%'}}>
                     { showAlert === '' && checkEmail === 0  && <Stack sx={{ width: '100%' }} spacing={2}>
                         <Alert severity="error">
-                            <AlertTitle>Warning</AlertTitle>
-                            This is a warning alert — <strong>All fields are required !</strong>
+                            <AlertTitle>Error</AlertTitle>
+                            This is a error alert — <strong>All fields are required !</strong>
                         </Alert>
                     </Stack>}
                     {showAlert === '' && checkEmail === 1 && <Stack sx={{ width: '100%' }} spacing={2}>
                         <Alert severity="error">
-                            <AlertTitle>Warning</AlertTitle>
-                            This is a warning alert — <strong>Invalid Email Or Password!</strong>
+                            <AlertTitle>Error</AlertTitle>
+                            This is a error alert — <strong>Invalid Email Or Password!</strong>
                         </Alert>
                     </Stack>}
                     { showAlert === 1 && checkEmail === '' && isLoginButtonDisable && <Stack sx={{ width: '100%' }} spacing={2}>

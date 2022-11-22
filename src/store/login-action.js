@@ -16,6 +16,11 @@ const loginAction = createSlice({
                 password: newId.password,
             };
         },
+        logout(state, action){
+            const log = action.payload;
+
+            state.isLogged={log};
+        },
         
     }
 });

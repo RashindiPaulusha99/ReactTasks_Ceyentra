@@ -16,7 +16,7 @@ function App() {
    
       <Switch>
           <Route path='/' exact>
-            <Register/>
+            <Login/>
           </Route>
           <Route path='/register'>
             <Register/>
@@ -31,7 +31,7 @@ function App() {
               <Post/>
           </Route>
           <Route path='*' >
-              <Register/>
+              <Login/>
           </Route>
       </Switch>
     
