@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import Card from './Card/Card';
+import React, { useEffect, useState , useContext} from "react";
+import Card from '../../components/Card/Card';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -8,14 +8,19 @@ import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import Stack from '@mui/material/Stack';
 
+import classes from './Login.module.css';
+
+import ThemeContext from "../../Context/auth-context";
+
 import { useSelector, useDispatch } from 'react-redux';
 
-
 import { useHistory } from "react-router-dom";
-import { login_Actions } from '../store/login-action';
+import { login_Actions } from '../../store/actions/login-action';
 
 const Login =()=>{
     const history = useHistory();
+
+    const themeCtX = useContext(ThemeContext);
 
     const dispatch = useDispatch();
 
@@ -28,18 +33,25 @@ const Login =()=>{
     const [checkEmail, setCheckEmail] = useState('');
     const [showEmailError, setShowEmailError] = useState(false);
     const [showPasswordError, setShowPasswordError] = useState(false);
+    const [theme, setTheme] = useState('');
 
     const regExEmail = /^[0-9A-Z a-z$&#]{3,10}(@gmail.com)|(@yahoo.com)$/i;
     const regExPassword = /^[A-Z|a-z|0-9\s]{4,10}$/g;
 
     const userData = useSelector((state) => state.register.user);
-    const userDatas = useSelector((state) => state.register.isLogged);
+    const loginData = useSelector((state) => state.login.isLogged);
 
     useEffect(()=>{
         if(email.trim() !== '' && password.trim() !== ''){
             setIsLoginButtonDisable(true);
         }
+        console.log(loginData);
     });
+
+    useEffect(()=>{
+        setTheme(themeCtX.theme);
+        console.log(themeCtX.theme);
+    },[theme]);
 
     const loginHandler=(event)=>{
         event.preventDefault();
@@ -71,10 +83,6 @@ const Login =()=>{
                         password
                     })
                 );
-
-                if(id !== ''){
-                    history.push('/blog');
-                }
             }
         }
 
@@ -82,15 +90,19 @@ const Login =()=>{
             setCheckEmail(0);
             setShowAlert('');
         }
+
+        if(loginData !== null){
+            history.push('blog');
+        }
     }
 
     return(
         <Card>
             <React.Fragment>
-                <div style={{display:'flex', justifyContent:'center', backgroundColor: '#00cec9', height: '70vh', width: '50vw',position: "absolute", top: '300px', bottom:'0', left:'0', right: '0', margin: 'auto',boxShadow: 'rgba(44, 153, 149, 0.4) 5px 5px, rgba(44, 153, 149, 0.3) 10px 10px, rgba(44, 153, 149, 0.2) 15px 15px, rgba(44, 153, 149, 0.1) 20px 20px, rgba(44, 153, 149, 0.05) 25px 25px' }}>
-                    <Box component="form" sx={{ '& > :not(style)': { m: 1, width: '1inch' },}}  style={{display:'flex',flexDirection:'column', justifyContent:'center'}}>
-                        <h1 style={{textAlign:'center'}}>SIGN IN</h1>
-                        <TextField fullWidth style={{display:'block', marginRight: '2px'}}
+                <div className={classes.form} style={{backgroundColor: theme === null || theme === 'dark' ? '#00cec9' : 'white' }}>
+                    <Box component="form" sx={{ '& > :not(style)': { m: 1, width: '1inch' },}}  className={classes.box}>
+                        <h1 className={classes.heading}>SIGN IN</h1>
+                        <TextField fullWidth className={classes.textFileds}
                             id="email" 
                             label="Email" 
                             value={email} 
@@ -106,8 +118,8 @@ const Login =()=>{
                                 }
                             }}
                         />
-                        {showEmailError ? <p style={{color:'red'}}>Email Invalid</p> : ''}
-                        <TextField fullWidth style={{display:'block'}}
+                        {showEmailError ? <p className={classes.error_para}>Email Invalid</p> : ''}
+                        <TextField fullWidth className={classes.textFileds}
                             id="password" 
                             label="Password" 
                             value={password} 
@@ -123,17 +135,17 @@ const Login =()=>{
                                 }
                             }}
                         />
-                        {showPasswordError ? <p style={{color:'red'}}>Password Invalid</p> : ''}
-                        <Button variant="contained" disabled={!isLoginButtonDisable} style={{display:'block', backgroundColor: '#00b894'}} fullWidth
+                        {showPasswordError ? <p className={classes.error_para}>Password Invalid</p> : ''}
+                        <Button variant="contained" disabled={!isLoginButtonDisable} className={classes.signin_button} fullWidth
                                 onClick={loginHandler}
                             >
                                 Sign in
                         </Button>
                        
-                        <h3 style={{textAlign:'center', fontSize:'14px'}}>I don't have an account. Let's <Link to='/register'>Sign up</Link></h3>
+                        <h3 className={classes.signup_link}>I don't have an account. Let's <Link to='/register'>Sign up</Link></h3>
                     </Box>
                 </div>
-                <div style={{margin:'10%', position: 'absolute', top: '350px',left:'200px',right: '0', width: '50%'}}>
+                <div className={classes.alertContainer}>
                     { showAlert === '' && checkEmail === 0  && <Stack sx={{ width: '100%' }} spacing={2}>
                         <Alert severity="error">
                             <AlertTitle>Error</AlertTitle>
@@ -146,7 +158,7 @@ const Login =()=>{
                             This is a error alert — <strong>Invalid Email Or Password!</strong>
                         </Alert>
                     </Stack>}
-                    { showAlert === 1 && checkEmail === '' && isLoginButtonDisable && <Stack sx={{ width: '100%' }} spacing={2}>
+                    { showAlert === 1 && checkEmail === '' && isLoginButtonDisable  && <Stack sx={{ width: '100%' }} spacing={2}>
                         <Alert severity="success">
                             <AlertTitle>Success</AlertTitle>
                             This is a success alert — <strong>Login Successfully!</strong>

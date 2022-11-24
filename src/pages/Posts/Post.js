@@ -6,7 +6,7 @@ import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import classes from './Post.module.css';
-import Card from './Card/Card';
+import Card from '../../components/Card/Card';
 import { useHistory } from "react-router-dom";
 import { useSelector } from 'react-redux';
 

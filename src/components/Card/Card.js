@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import Header from '../Layout/Header';
+import Header from '../../Layout/header/Header';
 import classes from './Card.module.css';
 
 const Card = (props)=>{

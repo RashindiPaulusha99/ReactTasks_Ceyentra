@@ -1,7 +1,6 @@
 import {configureStore} from '@reduxjs/toolkit';
-import loginAction from './login-action';
-import registerAction from './register-action';
-
+import loginAction from '../actions/login-action';
+import registerAction from '../actions/register-action';
 
 const store = configureStore({
     reducer:{

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import classes from './BlogList.module.css';
-import Card from './Card/Card';
-import Blogs from '../components/Blogs';
+import Card from '../../components/Card/Card';
+import Blogs from '../../pages/Blogs/Blogs';
 
 const BlogList =()=>{
 

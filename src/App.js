@@ -1,14 +1,9 @@
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 
-import BlogList from "./components/BlogList";
-import Register from "./components/Register";
-import Header from "./components/Layout/Header";
-import Login from "./components/Login";
-
-import { useSelector, useDispatch } from 'react-redux';
-import { Card } from '@mui/material';
-import { useEffect, useState } from 'react';
-import Post from './components/Post';
+import BlogList from "./pages/Blogs/BlogList";
+import Register from "./pages/Register/Register";
+import Login from "./pages/Login/Login";
+import Post from './pages/Posts/Post';
 
 function App() {
 
