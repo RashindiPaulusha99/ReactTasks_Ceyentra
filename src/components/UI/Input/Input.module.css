@@ -1,0 +1,50 @@
+.box{
+    display:flex;
+    flex-direction: column;
+    justify-content:center; 
+}
+
+.heading{
+    text-align: center;
+}
+
+.textFileds{
+    display: block;
+}
+
+.error_para{
+    color: red;
+}
+
+.signin_button{
+    display: block;
+    background-color: '#00b894';
+}
+
+.signup_link{
+    text-align:center;
+    font-size:14px;
+}
+
+.alertContainer{
+    margin:10%;
+    position: absolute;
+    top: 350px;
+    left:200px;
+    right: 0;
+    width: 50%;
+}
+
+.form{
+    display: flex;
+    justify-content: center;
+    height: 70vh; 
+    width: 50vw;
+    position: absolute;
+    top: 300px;
+    bottom:0;
+    left:0;
+    right: 0;
+    margin: auto;
+    box-shadow: rgba(44, 153, 149, 0.4) 5px 5px, rgba(44, 153, 149, 0.3) 10px 10px, rgba(44, 153, 149, 0.2) 15px 15px, rgba(44, 153, 149, 0.1) 20px 20px, rgba(44, 153, 149, 0.05) 25px 25px;
+}

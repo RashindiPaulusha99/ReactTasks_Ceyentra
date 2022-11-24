@@ -15,11 +15,15 @@ import ThemeContext from "../../Context/auth-context";
 import { useDispatch, useSelector } from 'react-redux';
 import { register_Actions } from '../../store/actions/register-action';
 
+const initialValues = {id: "", name: "", email: "", password: "",};
+
 const Register =(props)=>{
 
     const dispatch = useDispatch();
 
     const themeCtX = useContext(ThemeContext);
+
+    const [values, setValues] = useState(initialValues);
 
     const [id, setId] = useState(1);
     const [name, setName] = useState('');
@@ -40,14 +44,14 @@ const Register =(props)=>{
     const regExPassword = /^[A-Z|a-z|0-9\s]{4,10}$/g;
 
     useEffect(()=>{
-        if(name.trim() !== '' && email.trim() !== '' && password.trim() !== '' && confirmPassword .trim() !== ''){
+        if(values.name.trim() !== '' && values.email.trim() !== '' && values.password.trim() !== '' && confirmPassword .trim() !== ''){
             setIsLoginButtonDisable(true);
         }
     });
 
     const userData = useSelector((state) => state.register.user);
 
-    const registerHandler=(event)=>{
+    /*const registerHandler=(event)=>{
         event.preventDefault();
 
         setId(userData.length+1);
@@ -89,7 +93,86 @@ const Register =(props)=>{
                     );
                 }
             }
+    }*/
+
+    const handleInputChanges = (e)=>{
+        console.log(e.target);
+        const {name, value} = e.target;
+
+        setValues({...values, [name]: value});
+        console.log(e.target.name);
+
+        setName(values.name);
+        setEmail(values.email);
+        setPassword(values.password);
+
+       if(e.target.name === 'name'){
+            if(!regExName.test(e.target.value)){
+                setShowNameError(true);
+            }else{
+                setShowNameError(false);
+            }
+        }else if(e.target.name === 'email'){
+            if(!regExEmail.test(e.target.value)){
+                setValidateEmail(false);
+                setShowEmailError(true);
+            }else{
+                setValidateEmail(true);
+                setShowEmailError(false);
+            }
+        }else if(e.target.name === 'password'){
+            if(!regExPassword.test(e.target.value)){
+                setShowPasswordError(true);
+            }else{
+                setShowPasswordError(false);
+            }
         }
+    }    
+
+    const registerHandler=(event)=>{
+        event.preventDefault();
+
+        setId(userData.length+1);
+        
+        if(values.name.trim() === '' || values.email.trim() === '' || values.password.trim() === '' || confirmPassword.trim() === ''){
+            setShowAlert(0);
+
+            if(values.password.trim() !== confirmPassword.trim()){
+                setIsPasswordCorrect(true);
+                setShowAlert('');
+
+                for(let i=0; i< userData.length; i++){
+                    if(userData[i].email === values.email){
+                        setValues.email('');
+                    }else{
+                        setValues.email(values.email);
+                    }
+                }
+
+            }
+        }else{
+            setShowAlert(1);
+        }
+
+        const existingEmail = userData.find((userDetails) => userDetails.email === values.email);
+            setIsEmailExists(existingEmail);
+            if(!existingEmail){
+                if(!regExEmail.test(values.email)){
+                    setValidateEmail(false);
+                    setShowEmailError(true);
+                }else{
+                    dispatch(
+                        register_Actions.register({
+                            id,
+                            name,
+                            email,
+                            password
+                        })
+                    );
+                }
+            }
+            console.log(userData);
+    }
 
     return(
         <Card>
@@ -100,53 +183,32 @@ const Register =(props)=>{
                     <TextField fullWidth className={classes.textFileds}
                         id="name" 
                         label="Name" 
-                        value={name} 
+                        name='name'
+                        value={values.name} 
                         variant="outlined" 
                         type='text' 
-                        onChange={event=>{
-                            setName(event.target.value);
-                            if(!regExName.test(event.target.value)){
-                                setShowNameError(true);
-                            }else{
-                                setShowNameError(false);
-                            }
-                        }}
+                        onChange={handleInputChanges}
                     />
                     {showNameError ? <p className={classes.error_para}>Name Invalid</p> : ''}
                     <TextField fullWidth className={classes.textFileds}
                         id="email" 
                         label="Email" 
-                        value={email} 
+                        name='email'
+                        value={values.email} 
                         variant="outlined" 
                         type='text' 
-                        onChange={event=>{
-                            setEmail(event.target.value);
-                            if(!regExEmail.test(event.target.value)){
-                                setValidateEmail(false);
-                                setShowEmailError(true);
-                            }else{
-                                setValidateEmail(true);
-                                setShowEmailError(false);
-                            }
-                        }}
+                        onChange={handleInputChanges}
                         
                     />
                     {showEmailError ? <p className={classes.error_para}>Email Invalid</p> : ''}
                     <TextField fullWidth className={classes.textFileds}
                         id="password" 
                         label="Password" 
-                        value={password} 
+                        name='password'
+                        value={values.password} 
                         variant="outlined" 
                         type="password" 
-                        onChange={event=>{
-                            setPassword(event.target.value)
-                            if(!regExPassword.test(event.target.value)){
-                                setShowPasswordError(true);
-                            }else{
-                                
-                                setShowPasswordError(false);
-                            }
-                        }}
+                        onChange={handleInputChanges}
                     />
                     {showPasswordError ? <p className={classes.error_para}>Password Invalid</p> : ''}
                     <TextField fullWidth className={classes.textFileds}

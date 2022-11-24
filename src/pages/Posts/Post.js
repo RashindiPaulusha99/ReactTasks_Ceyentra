@@ -9,14 +9,30 @@ import classes from './Post.module.css';
 import Card from '../../components/Card/Card';
 import { useHistory } from "react-router-dom";
 import { useSelector } from 'react-redux';
+import { useRef } from "react";
+import { useReducer } from 'react';
+
+const initialState = 0;
+
+function reducer(state, action) {
+    switch (action) {
+        case 'add': {
+            return state + 1;
+        }
+    }
+} 
 
 const Post=(props)=>{
 
     const history = useHistory();
     const userData = useSelector((state) => state.login.isLogged);
 
+    const focusElement = useRef();
+
     const {state} = useLocation();
     const [image, setImage] = useState('');
+
+    const [todos, dispatch] = useReducer( reducer , initialState);
 
       useEffect(()=>{
         console.log(userData);
@@ -37,6 +53,8 @@ const Post=(props)=>{
 
               fetchDetails();
         }
+        focusElement.current = focusElement.current + 1;
+        console.log(focusElement.current);
             
     }, []);
 
@@ -51,7 +69,11 @@ const Post=(props)=>{
     const backToBlogPageHandler=()=>{
         history.push('blog');
     }
-   
+
+    const focus = ()=>{
+        focusElement.current.focus();
+    }
+
     return(
         <Card>
             <Fragment>
@@ -76,6 +98,17 @@ const Post=(props)=>{
                                 </Grid>
                                 <Grid item xs={12}>
                                     <Button className={classes.buttonback} onClick={backToBlogPageHandler}>Go Back</Button>
+                                </Grid>
+                            </Item>
+                        </Grid>
+                        <Grid item xs={12} lg={6} md={6}>
+                            <Item className={classes.item}>
+                                <Grid item xs={12} style={{marginTop:'10%'}}>
+                                    <input type='text' ref={focusElement} value={todos}/>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Button className={classes.buttonback} onClick={focus}>Focus</Button>
+                                    <Button className={classes.buttonback} onClick={()=> dispatch("add")}>Add</Button>
                                 </Grid>
                             </Item>
                         </Grid>
