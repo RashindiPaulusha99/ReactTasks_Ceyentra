@@ -100,16 +100,12 @@ const Register =(props)=>{
         const {name, value} = e.target;
 
         setValues({...values, [name]: value});
-        console.log(e.target.name);
-
-        setName(values.name);
-        setEmail(values.email);
-        setPassword(values.password);
 
        if(e.target.name === 'name'){
             if(!regExName.test(e.target.value)){
                 setShowNameError(true);
             }else{
+                setName(e.target.value);
                 setShowNameError(false);
             }
         }else if(e.target.name === 'email'){
@@ -117,6 +113,7 @@ const Register =(props)=>{
                 setValidateEmail(false);
                 setShowEmailError(true);
             }else{
+                setEmail(e.target.value);
                 setValidateEmail(true);
                 setShowEmailError(false);
             }
@@ -124,6 +121,7 @@ const Register =(props)=>{
             if(!regExPassword.test(e.target.value)){
                 setShowPasswordError(true);
             }else{
+                setPassword(e.target.value);
                 setShowPasswordError(false);
             }
         }
