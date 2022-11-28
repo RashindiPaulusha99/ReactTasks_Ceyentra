@@ -198,6 +198,7 @@ const Login =()=>{
             setCheckEmail(0);
             setShowAlert('');
         }
+        
 
         if(loginData !== null){
             for(let i=0; i< userData.length; i++){
