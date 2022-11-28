@@ -10,9 +10,7 @@ import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import Stack from '@mui/material/Stack';
 
-import Input from "../../components/UI/Input/Input";
-
-import classes from './Login.module.css';
+import '../../assets/Styles/Login.scss';
 
 import ThemeContext from "../../Context/auth-context";
 
@@ -118,7 +116,7 @@ const Login =()=>{
         setValues({...values, [name]: value});
 
         if(e.target.name === 'email'){
-            console.log(e.target.value)
+           
             if(!regExEmail.test(e.target.value)){
                 setCheckEmail(false);
                 setShowEmailError(true);
@@ -142,10 +140,7 @@ const Login =()=>{
 
         for(let i=0; i< userData.length; i++){
             if(values.email.trim() !== userData[i].email || values.password.trim() !== userData[i].password){
-                console.log(values.email.trim());
-                console.log(userData[i].email);
-                console.log(values.password.trim());
-                console.log(userData[i].password);
+                
                 setCheckEmail(1);
                 setShowAlert('');
             }else if(values.email.trim() === userData[i].email && values.password.trim() === userData[i].password){
@@ -199,7 +194,6 @@ const Login =()=>{
             setShowAlert('');
         }
         
-
         if(loginData !== null){
             for(let i=0; i< userData.length; i++){
                 if(values.email === userData[i].email && values.password === userData[i].password){
@@ -212,11 +206,11 @@ const Login =()=>{
     return(
         <Card>
             <React.Fragment>
-                <div className={classes.form} style={{backgroundColor: theme === null || theme === 'dark' ? '#00cec9' : 'white' }}>
-                    <Box component="form" sx={{ '& > :not(style)': { m: 1, width: '1inch' },}}  className={classes.box}>
-                        <h1 className={classes.heading}>SIGN IN</h1>
+                <div className="form" style={{backgroundColor: theme === null || theme === 'dark' ? '#00cec9' : 'white' }}>
+                    <Box component="form" sx={{ '& > :not(style)': { m: 1, width: '1inch' },}}  className="login_box">
+                        <h1 className="heading">SIGN IN</h1>
                         
-                        <TextField fullWidth className={classes.textFileds}
+                        <TextField fullWidth className="textFileds"
                             id="email" 
                             label="Email" 
                             name='email'
@@ -225,8 +219,8 @@ const Login =()=>{
                             type='text' 
                             onChange={handleInputChanges}
                         />
-                        {showEmailError ? <p className={classes.error_para}>Email Invalid</p> : ''}
-                        <TextField fullWidth className={classes.textFileds}
+                        {showEmailError ? <p className="error_para">Email Invalid</p> : ''}
+                        <TextField fullWidth className="textFileds"
                             id="password" 
                             label="Password"
                             name="password" 
@@ -235,17 +229,17 @@ const Login =()=>{
                             type="password" 
                             onChange={handleInputChanges}
                         />
-                        {showPasswordError ? <p className={classes.error_para}>Password Invalid</p> : ''}
-                        <Button variant="contained" disabled={!isLoginButtonDisable} className={classes.signin_button} fullWidth
+                        {showPasswordError ? <p className="error_para">Password Invalid</p> : ''}
+                        <Button variant="contained" disabled={!isLoginButtonDisable} className="signin_button" fullWidth
                                 onClick={loginHandler}
                             >
                                 Sign in
                         </Button>
                        
-                        <h3 className={classes.signup_link}>I don't have an account. Let's <Link to='/register'>Sign up</Link></h3>
+                        <h3 className="signup_link">I don't have an account. Let's <Link to='/register'>Sign up</Link></h3>
                     </Box>
                 </div>
-                <div className={classes.alertContainer}>
+                <div className="alertContainer">
                     { showAlert === '' && checkEmail === 0  && <Stack sx={{ width: '100%' }} spacing={2}>
                         <Alert severity="error">
                             <AlertTitle>Error</AlertTitle>

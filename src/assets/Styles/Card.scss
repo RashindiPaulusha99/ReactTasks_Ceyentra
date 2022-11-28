@@ -1,8 +1,10 @@
+@import "../../assets//Variables//Variables.scss";
+
 .card {
     padding: 1rem;
     width: 80%;
-    background-color: white;
-    position: relative;
+    background-color: $white_bg;
+    position:$relative_position;
     top:100px;
     bottom: 120px;
     left: 0;

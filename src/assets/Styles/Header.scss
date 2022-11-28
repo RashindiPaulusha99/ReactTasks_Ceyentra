@@ -1,14 +1,15 @@
+@import "../../assets/Variables/Variables.scss";
 
 .header {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
+    width: $full_width;
     height: 4rem;
     background-color: #81ecec;
     color: white;
-    display: flex;
-    justify-content: space-between;
+    display: $flex_display;
+    justify-content: $justify-content_space-between;
     align-items: center;
     padding: 0 10%;
     box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
@@ -22,12 +23,12 @@
   }
 
   .logout{
-    display: flex;
-    justify-content: space-between;
+    display: $flex_display;
+    justify-content: $justify-content_space-between;
   }
 
   .button{
-    position: relative ;
+    position: $relative_position ;
     top: 20px;
     left: 10px;
     height: 2rem;
@@ -38,7 +39,7 @@
   }
 
   .username{
-    position: relative ;
+    position: $relative_position ;
     top: 10px;
     right: 10px;
     height: 2rem;

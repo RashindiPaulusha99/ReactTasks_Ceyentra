@@ -1,49 +1,48 @@
+@import "../../assets/Variables/Variables.scss";
 
-
-
-.box{
-    display:flex;
+.register_box{
+    display:$flex_display;
     flex-direction: column;
-    justify-content:center; 
+    justify-content:$justify-content_center; 
 }
 
 .heading{
-    text-align: center;
+    text-align: $text_align;
 }
 
 .textFileds{
-    display: block;
+    display: $block_display;
 }
 
 .error_para{
     color: red;
 }
 
-.signin_button{
-    display: block;
+.signup_button{
+    display: $block_display;
     background-color: '#00b894';
 }
 
-.signup_link{
-    text-align:center;
+.signin_link{
+    text-align:$text_align;
     font-size:14px;
 }
 
 .alertContainer{
     margin:10%;
-    position: absolute;
-    top: 350px;
+    position: $absolute_position;
+    top: 400px;
     left:200px;
     right: 0;
-    width: 50%;
+    width: $half_width;
 }
 
 .form{
-    display: flex;
-    justify-content: center;
+    display: $flex_display;
+    justify-content: $justify-content_center;
     height: 70vh; 
     width: 50vw;
-    position: absolute;
+    position: $absolute_position;
     top: 300px;
     bottom:0;
     left:0;
