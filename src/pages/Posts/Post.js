@@ -12,6 +12,8 @@ import { useSelector } from 'react-redux';
 import { useRef } from "react";
 import { useReducer } from 'react';
 
+import BlogService from '../../services/BlogService';
+
 const initialState = 0;
 
 function reducer(state, action) {
@@ -40,15 +42,12 @@ const Post=(props)=>{
             history.push('login');
         }else{
             const fetchDetails = async()=>{
-          
-                const response = await fetch(
-                  'https://jsonplaceholder.typicode.com/photos/'+ state.state.id
-                );
-      
-                const responseData = await response.json();
-      
-                setImage(responseData.url);
-      
+
+                const response = await BlogService.fetchPosts(state.state.id);
+                console.log(response);
+                if(response.status === 200){
+                    setImage(response.data.url);
+                }
               }
 
               fetchDetails();
