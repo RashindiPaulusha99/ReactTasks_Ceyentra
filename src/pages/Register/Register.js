@@ -8,7 +8,7 @@ import AlertTitle from '@mui/material/AlertTitle';
 import Stack from '@mui/material/Stack';
 import {Link} from "react-router-dom";
 
-import classes from './Register.module.css';
+import '../../assets/Styles/Register.scss';
 
 import ThemeContext from "../../Context/auth-context";
 
@@ -175,10 +175,10 @@ const Register =(props)=>{
     return(
         <Card>
             <React.Fragment>
-            <div className={classes.form} style={{ backgroundColor: themeCtX.theme === null || themeCtX.theme === 'dark' ? '#00cec9' : 'white' }}>
-                <Box component="form" sx={{ '& > :not(style)': { m: 1, width: '1inch' },}} className={classes.box}>
-                    <h1 className={classes.heading}>SIGN UP</h1>
-                    <TextField fullWidth className={classes.textFileds}
+            <div className="form" style={{ backgroundColor: themeCtX.theme === null || themeCtX.theme === 'dark' ? '#00cec9' : 'white' }}>
+                <Box component="form" sx={{ '& > :not(style)': { m: 1, width: '1inch' },}} className="register_box">
+                    <h1 className="heading">SIGN UP</h1>
+                    <TextField fullWidth className="textFileds"
                         id="name" 
                         label="Name" 
                         name='name'
@@ -187,8 +187,8 @@ const Register =(props)=>{
                         type='text' 
                         onChange={handleInputChanges}
                     />
-                    {showNameError ? <p className={classes.error_para}>Name Invalid</p> : ''}
-                    <TextField fullWidth className={classes.textFileds}
+                    {showNameError ? <p className="error_para">Name Invalid</p> : ''}
+                    <TextField fullWidth className="textFileds"
                         id="email" 
                         label="Email" 
                         name='email'
@@ -198,8 +198,8 @@ const Register =(props)=>{
                         onChange={handleInputChanges}
                         
                     />
-                    {showEmailError ? <p className={classes.error_para}>Email Invalid</p> : ''}
-                    <TextField fullWidth className={classes.textFileds}
+                    {showEmailError ? <p className="error_para">Email Invalid</p> : ''}
+                    <TextField fullWidth className="textFileds"
                         id="password" 
                         label="Password" 
                         name='password'
@@ -208,8 +208,8 @@ const Register =(props)=>{
                         type="password" 
                         onChange={handleInputChanges}
                     />
-                    {showPasswordError ? <p className={classes.error_para}>Password Invalid</p> : ''}
-                    <TextField fullWidth className={classes.textFileds}
+                    {showPasswordError ? <p className="error_para">Password Invalid</p> : ''}
+                    <TextField fullWidth className="textFileds"
                         id="confirmPassword" 
                         label="Re-enter password" 
                         value={confirmPassword} 
@@ -219,17 +219,17 @@ const Register =(props)=>{
                             setConfirmPassword(event.target.value)
                         }}
                     />
-                    <Button variant="contained" disabled={!isLoginButtonDisable} className={classes.signup_button} fullWidth
+                    <Button variant="contained" disabled={!isLoginButtonDisable} className="signup_button" fullWidth
                         onClick={registerHandler}
                     >
                         Sign up
                     </Button>
                 
-                    <h3 className={classes.signin_link}>I already have an account. <Link to="/login">Sign in</Link>
+                    <h3 className="signin_link">I already have an account. <Link to="/login">Sign in</Link>
                     </h3>
                 </Box>
             </div>
-            <div className={classes.alertContainer}>
+            <div className="alertContainer">
                 {!showPasswordError && !showNameError && !showEmailError && showAlert=== 0 && !validateEmail && <Stack sx={{ width: '100%' }} spacing={1}>
                     <Alert severity="error">
                         <AlertTitle>Error</AlertTitle>

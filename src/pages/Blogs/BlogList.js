@@ -1,7 +1,9 @@
 import React, {useState, useEffect} from 'react';
-import classes from './BlogList.module.css';
+import '../../assets/Styles/BlogList.scss';
 import Card from '../../components/Card/Card';
 import Blogs from '../../pages/Blogs/Blogs';
+
+import BlogService from '../../services/BlogService';
 
 const BlogList =()=>{
 
@@ -15,21 +17,18 @@ const BlogList =()=>{
 
     useEffect(()=>{
 
-        const fetchDetails = async()=>{
+        const fetchDetails = async(e)=>{
           setLoading(true);
-          const response = await fetch(
-            'https://jsonplaceholder.typicode.com/posts'
-          );
 
-          const responseData = await response.json();
-
-          setPosts(responseData);
-          setLoading(false);
-          setShowPreviousButton(false);
-
-          console.log(responseData);
-
+          const response = await BlogService.fetchBlogs();
+          console.log(response);
+          if  (response.status === 200){
+            setPosts(response.data);
+            setLoading(false);
+            setShowPreviousButton(false);
+          }
         }
+
         fetchDetails();
     }, []);
 
@@ -65,11 +64,11 @@ const BlogList =()=>{
     return(
             <Card>
               <Blogs posts={currentPosts} loading={loading}/>
-              <section className={classes.pagination}>
+              <section className="pagination">
               <div>
-                    <button className={classes.buttonsPreAndNext} disabled={!showPreviousButton} onClick={handlePreviousButton}>Previous</button>
-                    <button className={classes.buttonsNumbers}>{currentPage}/{fullPage}</button>
-                    <button className={classes.buttonsPreAndNext} disabled={!showNextButton}  onClick={handleNextButton}>Next</button>
+                    <button className="buttonsPreAndNext" disabled={!showPreviousButton} onClick={handlePreviousButton}>Previous</button>
+                    <button className="buttonsNumbers" >{currentPage}/{fullPage}</button>
+                    <button className="buttonsPreAndNext" disabled={!showNextButton}  onClick={handleNextButton}>Next</button>
               </div>  
             </section>
             </Card>
