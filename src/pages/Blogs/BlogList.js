@@ -3,6 +3,8 @@ import '../../assets/Styles/BlogList.scss';
 import Card from '../../components/Card/Card';
 import Blogs from '../../pages/Blogs/Blogs';
 
+import BlogService from '../../services/BlogService';
+
 const BlogList =()=>{
 
   const [posts, setPosts] = useState([]);
@@ -15,21 +17,18 @@ const BlogList =()=>{
 
     useEffect(()=>{
 
-        const fetchDetails = async()=>{
+        const fetchDetails = async(e)=>{
           setLoading(true);
-          const response = await fetch(
-            'https://jsonplaceholder.typicode.com/posts'
-          );
 
-          const responseData = await response.json();
-
-          setPosts(responseData);
-          setLoading(false);
-          setShowPreviousButton(false);
-
-          console.log(responseData);
-
+          const response = await BlogService.fetchBlogs();
+          console.log(response);
+          if  (response.status === 200){
+            setPosts(response.data);
+            setLoading(false);
+            setShowPreviousButton(false);
+          }
         }
+
         fetchDetails();
     }, []);
 
