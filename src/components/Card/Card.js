@@ -1,12 +1,12 @@
 import React, { Fragment } from 'react';
 import Header from '../../Layout/header/Header';
-import classes from './Card.module.css';
+import '../../assets/Styles/Card.scss';
 
 const Card = (props)=>{
     return(
         <Fragment>
             <Header/>
-            <main className={classes.card}>{props.children}</main>
+            <main className="card">{props.children}</main>
         </Fragment>
     );
 }

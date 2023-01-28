@@ -1,7 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
-import classes from './Input.module.css';
-
 import TextField from '@mui/material/TextField';
+import '../../../assets/Styles/Input.scss';
 
 const Input =(props)=>{
 
@@ -12,7 +11,7 @@ const Input =(props)=>{
     return(
         <Fragment>
             <TextField fullWidth 
-                className={classes.textFileds}
+                className="textFileds"
                 id={props.id} 
                 label={props.label} 
                 value={props.value} 

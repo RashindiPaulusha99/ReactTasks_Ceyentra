@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import classes from './BlogList.module.css';
+import '../../assets/Styles/BlogList.scss';
 import Card from '../../components/Card/Card';
 import Blogs from '../../pages/Blogs/Blogs';
 
@@ -65,11 +65,11 @@ const BlogList =()=>{
     return(
             <Card>
               <Blogs posts={currentPosts} loading={loading}/>
-              <section className={classes.pagination}>
+              <section className="pagination">
               <div>
-                    <button className={classes.buttonsPreAndNext} disabled={!showPreviousButton} onClick={handlePreviousButton}>Previous</button>
-                    <button className={classes.buttonsNumbers}>{currentPage}/{fullPage}</button>
-                    <button className={classes.buttonsPreAndNext} disabled={!showNextButton}  onClick={handleNextButton}>Next</button>
+                    <button className="buttonsPreAndNext" disabled={!showPreviousButton} onClick={handlePreviousButton}>Previous</button>
+                    <button className="buttonsNumbers" >{currentPage}/{fullPage}</button>
+                    <button className="buttonsPreAndNext" disabled={!showNextButton}  onClick={handleNextButton}>Next</button>
               </div>  
             </section>
             </Card>

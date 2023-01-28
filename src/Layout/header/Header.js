@@ -1,6 +1,6 @@
 import React, {Fragment, useEffect, useContext} from 'react';
 
-import classes from './Header.module.css';
+import '../../assets/Styles/Header.scss';
 
 import {useHistory} from "react-router-dom";
 
@@ -39,7 +39,7 @@ const Header= (props)=>{
 
     });
     
-    const blog = <span className={classes.block}>BLOG</span>;
+    const blog = <span className="block">BLOG</span>;
 
     const logoutHandler = (event)=>{
 
@@ -65,17 +65,17 @@ const Header= (props)=>{
 
     return(
         <Fragment>
-            <header className = {classes.header}>
+            <header className = "header">
                 <h1 style={{fontSize: '150%'}}>MY {blog}</h1>
                 <Button variant="outlined" onClick={handleClickOpen}>
                     select theme
                 </Button>
                 {loginData !== null &&
-                    <div className={classes.logout}>
-                        <h3 className={classes.username}>{loginData.name}</h3>
+                    <div className="logout">
+                        <h3 className="username">{loginData.name}</h3>
                         <h3></h3>
                          {loginData.log !== null && <h2>|</h2>}
-                         {loginData.log !== null &&  <Link underline="none" className={classes.button} onClick={()=>logoutHandler()}>Logout</Link>}
+                         {loginData.log !== null &&  <Link underline="none" className="button" onClick={()=>logoutHandler()}>Logout</Link>}
                     </div>
                  }
 
