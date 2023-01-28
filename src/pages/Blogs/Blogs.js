@@ -15,6 +15,7 @@ const Blogs=(posts, loading)=>{
         if(userData === null){
             history.push('login');
         }
+        console.log('dfdfghfghfh')
     });
 
     const Item = styled(Paper)(({ theme }) => ({
