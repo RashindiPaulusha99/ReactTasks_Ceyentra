@@ -19,6 +19,14 @@ const Blogs=(posts, loading)=>{
         console.log('dfdfghfghfh')
         console.log('dfdfghfghfh')
         console.log('dfdfghfghfh')
+        console.log('dfdfghfghfh') 
+        console.log('dfdfghfghfh')
+        console.log('dfdfghfghfh')
+
+        console.log('dfdfghfghfh')
+        console.log('dfdfghfghfh')
+        console.log('dfdfghfghfh') console.log('dfdfghfghfh')
+        console.log('dfdfghfghfh')
     });
 
     const Item = styled(Paper)(({ theme }) => ({
